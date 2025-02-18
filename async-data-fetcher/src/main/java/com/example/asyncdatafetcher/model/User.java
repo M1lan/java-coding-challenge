@@ -1,5 +1,5 @@
 package com.example.asyncdatafetcher.model;
-/*  EXAMPLE JSON
+/*  EXAMPLE JSON from "user" endpoint
   {
   "user": {
     "id": 1,
