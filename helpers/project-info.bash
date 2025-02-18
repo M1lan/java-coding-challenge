@@ -7,8 +7,7 @@
 #
 # Dev tooling, not for use in PROD env.
 #
-# USAGE: cd git repo dir, which is encapsulating java project dir and
-# run ./helpers/project-info.bash
+# USAGE: cd to Java project dir and run ../helpers/project-info.bash
 #
 # ZERO warranty for any purpose!
 #
