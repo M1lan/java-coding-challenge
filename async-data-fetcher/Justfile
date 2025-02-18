@@ -1,0 +1,25 @@
+#!/usr/bin/env -S just --justfile
+
+##
+# Justfile (like Makefile) - make it easier and faster to use maven ->
+# https://just.systems/
+
+set shell := ["bash", "-cu"]
+
+cli:
+	java -jar target/async-data-fetcher-0.0.1-SNAPSHOT.jar cli
+
+serve:
+	java -jar target/async-data-fetcher-0.0.1-SNAPSHOT.jar
+
+clean:
+    ./mvnw clean
+
+distclean:
+	rm -rf target
+
+compile:
+    ./mvnw compile
+
+build:
+    ./mvnw clean package -DskipTests -Dmaven.test.skip=true
