@@ -1,2 +1,30 @@
-CLI runner with spring boot
+* learning resources
+
+** Spring / Spring Boot
+https://spring.io/guides/gs/rest-service
+
+** fetch
+- https://docs.spring.io/spring-framework/reference/web/webflux-webclient.html
+
+
+** caching
+
+https://docs.spring.io/spring-framework/reference/integration/cache.html
+https://docs.spring.io/spring-boot/reference/io/caching.html#io.caching
+
+** cli runner
+https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.command-line-runner
 https://docs.spring.io/spring-boot/api/java/org/springframework/boot/CommandLineRunner.html
+
+** testing
+https://docs.spring.io/spring-boot/reference/testing/index.html#testing
+https://docs.spring.io/spring-framework/reference/web/webflux-webclient/client-testing.html
+
+** dockerizing
+https://spring.io/guides/gs/spring-boot-docker
+https://docs.docker.com/build/building/best-practices/
+
+
+** maven
+https://maven.apache.org/guides/getting-started/index.html
+https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/maven-plugin/reference/html/
