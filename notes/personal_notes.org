@@ -1,0 +1,318 @@
+#+html_doctype: html5
+#+options: html5-fancy:t  html-style:nil
+#+html_head: <link href="https://unpkg.com/sanitize.css" rel="stylesheet"/>
+
+#+options: html-link-use-abs-url:nil html-postamble:auto
+#+options: html-preamble:t html-scripts:nil
+
+#+html_container: div
+#+html_content_class: content
+#+description:
+#+keywords:
+#+html_link_home:
+#+html_link_up:
+#+html_mathjax:
+#+html_equation_reference_format: \eqref{%s}
+
+
+#+title: Programming challenge [REDACTED]
+#+subtitle: "Fetch and merge data asynchronously from an API".
+#+infojs_opt:
+#+creator: <a href="https://www.gnu.org/software/emacs/">Emacs</a> 31.0.50 (<a href="https://orgmode.org">Org</a> mode 9.8-pre)
+#+latex_header:
+
+* Original coding challenge text
+
+Received by Email on Feb. 11 2025 from [REDACTED].
+
+#+BEGIN_QUOTE
+
+"Fetch asynchronous data from an API".
+
+Your task is to write a script or app, which gathers data from two
+endpoints asynchronously, merges the responses and displays them in any
+way, for example as JSON response from a REST API.
+
+For example you could use these two endpoints:
+- http://jsonplaceholder.typicode.com/users/1 to obtain a user's data
+- http://jsonplaceholder.typicode.com/posts?userId=1 to obtain all
+  comments written by that user.
+
+Please submit your solution via GitHub and commit frequently.
+
+If you find a straightforward solution for the 'problem', even better.
+
+We would like to see what you achieve within 3 hours timeboxed and how
+you approach the challenge.  If you have time left over, we are happy if
+you improve your solution in a direction that you think fits the
+challenge.
+#+END_QUOTE
+
+* How I interpret this task
+- I fully understand this is for a hybrid positon of "DevOps,
+  Infrastructure and Backend Engineer" rolled in one, and the coding
+  challenge leaves a lot of room for interpretation on purpose.
+- I also understand that I should include test cases.
+- I understand that the core application with all Bells and Whistles
+  should be developed from scratch in ~3 hours in one sitting including
+  small breaks.
+- I understand that I should use git commits in a way similar to "timed
+  autosave", so that the reviewer can see a time-line and progression.
+- demonstrate knowledge of rest APIs and restful state
+- demonstrate knowledge of microservices architecture
+- demonstrate knowledge of Java and Spring Boot (I'm a Bash, Go, Python
+  guy, but I also know Java).
+- maybe also: demonstrate basic understading of parallelism, concurrency
+  and race-conditions.
+- it should not matter in which order we fetch the data from which
+  endpoint!
+- it should not matter if any of the two endpoints is not reachable!
+- the merged JSON should always look the same: user first, user-posts
+  second.
+- the "interface" where the merged result is returned should also be an
+  API, not just an output to stdout.
+- merge two JSON blobs correctly in all cases!
+- be sure async network element does not give any trouble.
+- from the wording alone, under circumstances "gather data" can imply
+  it's running in regular intervals to check if anything changed on the
+  API endpoints or similar repeating task.
+  - a better wording to avoid misunderstandings is "fetch data", which
+    implies a one-time action.
+- "merge the responses": from this I take away that I'd basically wrap
+  both responses together at the top level.
+- "display them in a way": here I'll assume that basic json output will
+  be fine. If there's enough time, I can be creative here and make it a
+  bit "user-friendlier", or include some infrastructure and ci/cd.
+- the merged json will look like this:
+
+  #+BEGIN_SRC json
+    {
+	"user": {...}, <- first response
+	"posts": [...] <- second response
+    }
+  #+END_SRC
+
+- "straightforward solution" ... well that's the big catch here. See
+  prototype!  I don't know about you, but for me, curl and jq are indeed
+  the most straightforward "scalpel-like" tools that I can think of for
+  this task.  I also don't believe anyone in the scope of this interview
+  can code anything that will beat the performance and reliability of
+  these two utils. But this does NOT apply to the "api server" part,
+  only the async-fetch-and-merge part of the excercise.
+
+- the most "straightforward solution" for async fetching is this:
+
+#+BEGIN_SRC bash
+  exec 3< <(curl -sSL https://jsonplaceholder.typicode.com/users/1 &)
+  exec 4< <(curl -sSL https://jsonplaceholder.typicode.com/posts?userId=1 &)
+  jq --null-input --argjson user "$(cat <&3)" --argjson posts "$(cat <&4)" '{user: $user, posts: $posts}'
+#+END_SRC
+
+I would like to point out this is indeed the best, most efficient and
+most straight-forward solution to this "problem", minus the api-server.
+
+It uses file-descriptors 3 and 4 to fetch the contents of the two
+endpoints asynchronously in the background (via '&'), then uses cat to
+send the file-descriptor contents through jg to output the merged JSON
+blob.  For the webserver-component, one could use inetd, socat, nc, or
+tcpserver (ucspi-tcp).
+
+
+* Choices / Approach
+
+** before I even start
+- think about it a couple of hours even before I start.
+- make these notes.
+- decide I will have to implement this in one sitting, hopefully much
+  less than 3 hours.
+- very first prototype made directly on the shell's command line, and
+  not in an editor, get output of history.
+  - use my own "production ready bash template" (github.com/m1lan) as
+    starting point
+- I'll fill-in the blanks with from output from bash's history, get started.
+- I have three hours to do this, so the task itself leaves me a lot of
+  room for expression.
+  - I'll most likely make the choice, instead of taking the minimalist
+    approach to include some boilerplate to make it a bit more fancy
+    than it needs to be, but I don't want anyone to think that I typed
+    this all down in the given time, so boilerplate will be clearly marked as such.
+  - I will need the three hours of time to also re-familiarize myself
+    with Java.
+- I'll probably also want to include some github actions, just because.
+- the biggest challenge for me will be, after creating the protoype, to
+
+
+** optional
+- user interface that's a bit more than just "json output on the cli"
+- use java and spring boot for the app after finishing the prototype.
+  - this almost feels like asking for trouble, but the challenge is also
+    to re-learn a bit of Java after not having used it for over a
+    decade, apart of course from reading it and "devopsing" around it.
+- some sort of ci/cd solution.
+- an actual deployment (vercel?)
+- a database or mock-database of sorts
+- docker / k8s showcase if time allows (or use some boilerplate I have
+  stashed away)
+- basic infra setup (probably tf)
+- try make it so, everything runs locally and "for free" (paying my own
+  AWS bills is already enough)
+- use mockups and placeholders where needed.
+
+* prototype implementation
+Note: I am serious about this solution and there is zero amount of
+sarcasm, but probaly the best, most stable, and most production ready
+way to solve this!
+
+- bash
+- curl
+- jq
+
+exec 3< <(curl -s http://jsonplaceholder.typicode.com/users/1) ; exec 4< <(curl -s http://jsonplaceholder.typicode.com/posts?userId=1) ; jq -n --argjson user "$(cat <&3)" --argjson posts "$(cat <&4)" '{user: $user, posts: $posts}'
+
+* java implementation
+** spring boot (?)
+- I am not really doing myself a favor to force this tech stack. The
+  task itself is solvable in under 5 minutes.
+- I am familiar with the concepts of:
+  - microservice architecture (and their pitfalls!)
+  - concurrency, parallelism and multithreading.
+  - consitency, state, consensus, ...
+- I am familiar with Java-related technologies because I have worked as
+  "DevOps Engineer [sic.]", Admin, and Production Engineer:
+  - maven / gradle
+  - sdkman
+  - spring and spring boot
+- I am NOT familiar with writing any substantial Java code, here I will
+  have to quickly learn. Especially Java Testing is a first time.
+- I have learned quite intensely about Java and OOP in 2 universities.
+- For some strange misunderstanding, my "DevOps Engineer" Jobs so far
+  always excluded the "DevOps"-Person me directly working on larger Java
+  codebases. On the job we always had (oftten freelance)
+  Backend-Engineers, Coders, and Developers, usually hired on a
+  per-project or per-feature basis.
+
+* learning resources
+
+** Spring / Spring Boot
+https://spring.io/guides/gs/rest-service
+
+** fetch
+- https://docs.spring.io/spring-framework/reference/web/webflux-webclient.html
+
+** caching
+https://docs.spring.io/spring-framework/reference/integration/cache.html
+https://docs.spring.io/spring-boot/reference/io/caching.html#io.caching
+
+** cli mode
+https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.command-line-runner
+
+** testing
+https://docs.spring.io/spring-boot/reference/testing/index.html#testing
+https://docs.spring.io/spring-framework/reference/web/webflux-webclient/client-testing.html
+
+** dockerizing
+https://spring.io/guides/gs/spring-boot-docker
+https://docs.docker.com/build/building/best-practices/
+
+** maven
+https://maven.apache.org/guides/getting-started/index.html
+https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/maven-plugin/reference/html/
+
+* misc
+Some other things... really unimportant (maybe interesting) stuff here.
+
+** The DevOps dilemma
+"DevOps" is actually NOT a role or title but a way of doing things:
+
+- All Operations is done by Devs. Everybody on the team is a Dev.
+- Everybody is the same, an "Software Engineer".
+- Only one silo: the Dev silo. Not a separate DevOps silo.
+- Knowledge-transfer across product-team borders.
+- No "Helpdesk" or "Admin" like role outside of IT-service.
+- Many times, the Company's reality looks very different and demands a
+  "fix it" guy with root-access everywhere. That person is usually
+  called "DevOps Engineer".
+- In some settings, "DevOps" can also mean "Cloud" or "Infrastructure"
+  or "Platform", and this is where it gets out of hand, because all
+  these roles are very clearly defined, while "DevOps" is not.
+- There is always a platform, if we like it or not. it's the entirety of
+  things that our product runs on. Every "DevOps" is also a "Platform
+  Engineer".
+- The "Infrastructure-side DevOps" is not called "DevOps Engineer".
+- The "Product-side DevOps" should not exists!  Devs can make their own
+  CI/CD tools much better than someone who is NOT working on their
+  Project, because they know what is needed.
+- Absolutely everybody can use YAML + git!
+- GitOps is the thing where we automate the SDLC via git, and it's part
+  of DevOps-culture, but not a replacement for DevOps-practices.
+  - GitOps is contrasted by "Click-Ops", where infrastructure is
+    provisioned over the Hyperscaler website (AWS, GCP, Azure, ...).
+  - GitOps relates to "infrastructure as (or from) code".
+- Integral part of DevOps-culture is automation from the start, not as
+  an afterthought.
+- "Left Shift" means that we enable and empower Developers! We do NOT
+  shift additional burden upon them.
+- In DevOps culture, unlike normally in Development, security is NOT an
+  afterthought. That is where the term DevSecOps comes from. It is also
+  not a role / title, but a culture and a way of doing things.
+
+"DevOps done right" means that the person holding the "DevOps Engineer"
+title will always cease to exist at one point, and if they don't, they
+will become the single point of failure and a bottle-neck for the entire
+company.  Or, they will become a very expensive second Helpdesk.  Even
+that can also be a good solution for some scenarios, but it's not a very
+good idea in general, it only slows things down. We go fast towards
+"take a ticket please and wait in line" and that's not what we want.
+
+** [REDACTED]'s webstack intel (just for fun...)
+It has been a very long time I have visited this site!  A lot has
+changed, and to the better!
+
+The web is truly open, so even before I received this coding challenge,
+I looked a bit closer, wanting to know how I can prepare myself for this
+interview.
+
+Here is the list of things that I found out about [REDACTED]'s frontend
+stack:
+
+*** Core Webdev Utils
+- React
+- Next.js (14.2.23)
+- Marko https://markojs.com/
+- core-js (3.10.2)
+- Tailwind CSS
+
+*** Security
+- HSTS (HTTP Strict Transport Security)
+
+*** Miscellaneous
+- Webpack (https://webpack.js.org/)
+- RSS
+- PWA (Progressive Web App)
+- Open Graph (https://ogp.me/)
+- HTTP/3
+
+*** Caching
+- Varnish (https://varnish-cache.org/)
+
+*** CDN
+Amazon CloudFront
+
+*** Advertising
+- Taboola (blocked by my /etc/hosts :-))
+- Google Publisher Tag
+
+*** Tag managers
+- Google Tag Manager
+
+*** PaaS
+- Amazon Web Services
+
+*** Reverse proxies
+- Envoy
+
+*** Real-user and performance monitoring
+- SpeedCurve (also blocked by my /etc/hosts)
+
+*** Performance
+- Priority Hints (https://github.com/WICG/priority-hints)
