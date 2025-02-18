@@ -23,3 +23,37 @@ compile:
 
 build:
     ./mvnw clean package -DskipTests -Dmaven.test.skip=true
+
+########################
+
+profile:
+    ./mvnw exec:exec -Dexec.executable="jvisualvm"
+
+heapdump:
+    jcmd $(pgrep -f 'java.*MyApp') GC.heap_dump target/heapdump.hprof
+
+thread-dump:
+    jcmd $(pgrep -f 'java.*MyApp') Thread.print > target/threaddump.txt
+
+gdb-java:
+    gdb --args java -jar target/*.jar
+
+debug:
+    mvnDebug spring-boot:run
+
+
+
+####
+
+
+perf-test-jmeter:
+    jmeter -n -t perf-tests/script.jmx -l perf-tests/results.jtl -e -o perf-tests/report
+
+stress-test:
+    k6 run --vus 500 --duration 2m perf-tests/script.js
+
+load-test:
+    k6 run --vus 100 --duration 10m perf-tests/script.js
+
+soak-test:
+    k6 run --vus 50 --duration 24h perf-tests/script.js

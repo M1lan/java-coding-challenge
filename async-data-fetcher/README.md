@@ -1,36 +1,69 @@
-# async-data-fetcher
+# Async Data Fetcher
 
-This is a Spring Boot microservice that fetches third-party API data
-asynchronously, merges the JSON responses into a unified blob, and
-serves it via a REST API.
+A minimal Spring Boot microservice that asynchronously fetches data from
+external APIs, merges it, and exposes the result as a REST API or CLI
+output.  Built with Spring Boot WebFlux, it leverages caching,
+asynchronous programming, and Docker for containerization.
 
-For your convenience, it also includes a CLI mode without the server.
+## Features
+- Asynchronous data fetching using Spring WebFlux and Reactor.
+- Merged JSON output from multiple endpoints.
+- Dual operation modes: REST API and CLI.
+- Caching for improved performance.
+- Docker and Docker Compose support.
+
+## Prerequisites
+- JDK 17+
+- Maven (or use the provided Maven wrapper)
+- Docker (for containerization)
 
 ## Getting Started
 
-- Test the project using Maven (no build):
-  ```
-  ./mvnw test
-  ```
-- Build the project using Maven (no testing):
-  ```
-  ./mvnw clean package -DskipTests -Dmaven.test.skip=true
-  ```
+### Build
+Using the Justfile:
+```bash
+just build
+```
 
-- Run the application:
-  ```
-  ./mvnw spring-boot:run
-  # or alternatively:
-  java -jar target/async-data-fetcher-0.0.1-SNAPSHOT.jar
-  ```
+Or manually:
+```bash
+./mvnw clean package
+```
 
-- At a later point, I might include a Justfile (similar to Makefile),
-  because the Maven cli is quite frankly, a little bit user-unfriendly.
+### Run in Server Mode
+```bash
+just dev
+```
 
+Access the REST API at [http://localhost:8080/api/merged](http://localhost:8080/api/merged).
 
-## Endpoints
+### Run in CLI Mode
 
-- GET `/`: Returns the unified JSON data.
+```bash
+just cli
+```
 
-Happy coding (to myself)!
-Happy reviewing (to you)!
+### Run Tests
+```bash
+just test
+```
+
+### Docker
+Build the Docker image:
+```bash
+just docker-build
+```
+
+Run with Docker Compose:
+```bash
+just docker-up
+```
+## For Developers
+- Use the Maven wrapper for consistency.
+- Follow the established code style ("spotless").
+- Leverage the Justfile for common tasks, use it for dev and pipelines.
+- Run tests frequently using `just test`.
+- Use Docker (and Docker Compose) for containerized environments.
+
+## License
+MIT License
