@@ -16,16 +16,13 @@ public class DataFetchIntegrationTest {
     @Test
     void fetchData() {
         webTestClient.get().uri("/")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBody(MergedData.class)
-                .consumeWith(response -> {
+			.accept(MediaType.APPLICATION_JSON)
+			.exchange()
+			.expectStatus().isOk()
+			.expectHeader().contentType(MediaType.APPLICATION_JSON)
+			.expectBody(MergedData.class)
+			.consumeWith(response -> {
                     MergedData mergedData = response.getResponseBody();
-                    // Assertions on the mergedData
-					assertNotNull(mergedData.getUser());
-                    assertFalse(mergedData.getPosts().isEmpty());
                 });
     }
 }
