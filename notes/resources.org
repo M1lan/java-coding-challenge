@@ -1,0 +1,2 @@
+CLI runner with spring boot
+https://docs.spring.io/spring-boot/api/java/org/springframework/boot/CommandLineRunner.html

@@ -3,9 +3,7 @@ package com.example.asyncdatafetcher.cli;
 import com.example.asyncdatafetcher.service.DataFetchService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
-@Component
 public class CliRunner implements CommandLineRunner {
   private final DataFetchService s;
   private final ObjectMapper om;
