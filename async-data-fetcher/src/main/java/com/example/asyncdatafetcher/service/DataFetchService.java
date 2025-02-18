@@ -22,43 +22,38 @@ public class DataFetchService {
 
   @Value("${api.posts-url}")
   private String postsUrl;
-
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** TODO: Auto-generated Javadoc */
   public DataFetchService(WebClient wc) {
     this.wc = wc;
   }
 
   @Cacheable("mergedData")
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** TODO: Auto-generated Javadoc */
   public Mono<MergedData> fetchMergedData() {
     var userMono =
-      wc.get()
-      .uri(userUrl)
-      .retrieve()
-      .onStatus(
+        wc.get()
+            .uri(userUrl)
+            .retrieve()
+            .onStatus(
                 status -> status.isError(),
                 clientResponse -> Mono.error(new RuntimeException("User API failed")))
-      .bodyToMono(User.class);
+            .bodyToMono(User.class);
 
     var postsFlux =
-      wc.get()
-      .uri(postsUrl)
-      .retrieve()
-      .onStatus(
+        wc.get()
+            .uri(postsUrl)
+            .retrieve()
+            .onStatus(
                 status -> status.isError(),
                 clientResponse -> Mono.error(new RuntimeException("Posts API failed")))
-      .bodyToFlux(Post.class)
-      .collectList();
+            .bodyToFlux(Post.class)
+            .collectList();
 
     return Mono.zip(userMono, postsFlux, MergedData::new)
-      .onErrorResume(
-                     e -> {
-                       log.warn("Error fetching data: {}", e.getMessage());
-                       return Mono.empty();
-                     });
+        .onErrorResume(
+            e -> {
+              log.warn("Error fetching data: {}", e.getMessage()); // disable Java stack traces!
+              return Mono.empty();
+            });
   }
 }

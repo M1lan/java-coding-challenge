@@ -66,7 +66,6 @@ package com.example.asyncdatafetcher.model;
 }
 */
 
-
 public class Post {
   private Long userId;
   private Long id;
