@@ -72,63 +72,45 @@ public class Post {
   private String title;
   private String body;
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Constructs a new Post instance. */
   public Post() {}
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Returns the post's userId. */
   public Long getUserId() {
     return userId;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Sets the post's userId. */
   public void setUserId(Long userId) {
     this.userId = userId;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Returns the post's id. */
   public Long getId() {
     return id;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Sets the post's id. */
   public void setId(Long id) {
     this.id = id;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Returns the post's title. */
   public String getTitle() {
     return title;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Sets the post's title. */
   public void setTitle(String title) {
     this.title = title;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Returns the post's body. */
   public String getBody() {
     return body;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Sets the post's body. */
   public void setBody(String body) {
     this.body = body;
   }
