@@ -1,17 +1,23 @@
 package com.example.asyncdatafetcher.controller;
 
+import com.example.asyncdatafetcher.model.MergedData;
+import com.example.asyncdatafetcher.service.DataFetchService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
 public class DataFetchController {
+  private final DataFetchService s;
 
-    @GetMapping("/data")
-    public Mono<String> fetchData() {
+  /** Construct a new DataFetchController with the given DataFetchService. */
+  public DataFetchController(DataFetchService s) {
+    this.s = s;
+  }
 
-        // TODO: Add async fetching/merging of JSON from source API.
-
-        return Mono.just("{\"message\": \"Hello, world!\"}");
-    }
+  @GetMapping("/")
+  /** Fetch and return the merged data as a "Mono". */
+  public Mono<MergedData> get() {
+    return s.fetchMergedData();
+  }
 }
