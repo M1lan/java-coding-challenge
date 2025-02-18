@@ -36,8 +36,15 @@ test-only:
 test:
     ./mvnw test
 
-########################
+########################################################################
+docker-build:
+	docker build -t async-data-fetcher .
 
+security-scan:
+	./mvnw org.owasp:dependency-check-maven:check -DnvdApiKey=${NVD_API_KEY}
+
+
+########################################################################
 profile:
     ./mvnw exec:exec -Dexec.executable="jvisualvm"
 
@@ -54,10 +61,7 @@ debug:
     mvnDebug spring-boot:run
 
 
-
-####
-
-
+########################################################################
 perf-test-jmeter:
     jmeter -n -t perf-tests/script.jmx -l perf-tests/results.jtl -e -o perf-tests/report
 
