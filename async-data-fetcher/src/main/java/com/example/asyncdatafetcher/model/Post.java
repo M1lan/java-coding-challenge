@@ -72,36 +72,63 @@ public class Post {
   private String title;
   private String body;
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public Post() {}
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public Long getUserId() {
     return userId;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public void setUserId(Long userId) {
     this.userId = userId;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public Long getId() {
     return id;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public void setId(Long id) {
     this.id = id;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public String getTitle() {
     return title;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public void setTitle(String title) {
     this.title = title;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public String getBody() {
     return body;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public void setBody(String body) {
     this.body = body;
   }

@@ -10,11 +10,17 @@ public class CliRunner implements CommandLineRunner {
   private final DataFetchService s;
   private final ObjectMapper om;
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public CliRunner(DataFetchService s, ObjectMapper om) {
     this.s = s;
     this.om = om;
   }
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public void run(String... args) throws Exception {
     if (args.length > 0 && "cli".equalsIgnoreCase(args[0])) {
       var m = s.fetchMergedData().block();
