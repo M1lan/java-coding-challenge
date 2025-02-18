@@ -29,5 +29,12 @@ public class DataFetchService {
 
   @Cacheable("mergedData")
   public Mono<MergedData> fetchMergedData() {
-}
+
+    return Mono.zip(userMono, postsFlux, MergedData::new)
+      .onErrorResume(
+                     e -> {
+                       log.warn("Error fetching data: {}", e.getMessage());
+                       return Mono.empty();
+                     });
+  }
 }
