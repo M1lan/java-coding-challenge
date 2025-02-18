@@ -1,0 +1,19 @@
+FROM maven:3.9.5-eclipse-temurin-17-alpine AS builder
+WORKDIR /app
+
+COPY pom.xml .
+COPY mvnw .
+COPY src ./src
+COPY .mvn ./.mvn
+
+RUN ./mvnw dependency:go-offline && ./mvnw package -DskipTests -Dmaven.test.skip=true
+
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+COPY --from=builder /app/target/async-data-fetcher-0.0.1-SNAPSHOT.jar async-data-fetcher-0.0.1-SNAPSHOT.jar
+
+EXPOSE 8282
+ENTRYPOINT ["java", "-jar", "/app/async-data-fetcher-0.0.1-SNAPSHOT.jar"]
