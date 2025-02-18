@@ -3,7 +3,6 @@ package com.example.asyncdatafetcher.service;
 import com.example.asyncdatafetcher.model.MergedData;
 import com.example.asyncdatafetcher.model.Post;
 import com.example.asyncdatafetcher.model.User;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,16 +29,30 @@ public class DataFetchService {
 
   @Cacheable("mergedData")
   public Mono<MergedData> fetchMergedData() {
-    Mono<User> userMono = wc.get().uri(userUrl).retrieve().bodyToMono(User.class);
+    var userMono =
+      wc.get()
+      .uri(userUrl)
+      .retrieve()
+      .onStatus(
+                status -> status.isError(),
+                clientResponse -> Mono.error(new RuntimeException("User API failed")))
+      .bodyToMono(User.class);
 
-    Mono<List<Post>> postsMono =
-        wc.get().uri(postsUrl).retrieve().bodyToFlux(Post.class).collectList();
+    var postsFlux =
+      wc.get()
+      .uri(postsUrl)
+      .retrieve()
+      .onStatus(
+                status -> status.isError(),
+                clientResponse -> Mono.error(new RuntimeException("Posts API failed")))
+      .bodyToFlux(Post.class)
+      .collectList();
 
-    return Mono.zip(userMono, postsMono, MergedData::new)
-        .onErrorResume(
-            e -> {
-              log.warn("Error fetching data: {}", e.getMessage());
-              return Mono.empty();
-            });
+    return Mono.zip(userMono, postsFlux, MergedData::new)
+      .onErrorResume(
+                     e -> {
+                       log.warn("Error fetching data: {}", e.getMessage());
+                       return Mono.empty();
+                     });
   }
 }
