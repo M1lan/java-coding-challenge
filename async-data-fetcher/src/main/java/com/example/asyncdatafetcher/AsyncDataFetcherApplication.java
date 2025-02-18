@@ -7,8 +7,8 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 @EnableCaching
 public class AsyncDataFetcherApplication {
-	/** entrypoint */
-	public static void main(String[] args) {
-		SpringApplication.run(AsyncDataFetcherApplication.class, args);
-	}
+  /** entrypoint */
+  public static void main(String[] args) {
+    SpringApplication.run(AsyncDataFetcherApplication.class, args);
+  }
 }

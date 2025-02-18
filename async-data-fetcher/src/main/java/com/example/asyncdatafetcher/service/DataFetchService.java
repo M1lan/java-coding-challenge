@@ -3,6 +3,7 @@ package com.example.asyncdatafetcher.service;
 import com.example.asyncdatafetcher.model.MergedData;
 import com.example.asyncdatafetcher.model.Post;
 import com.example.asyncdatafetcher.model.User;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,8 +11,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Service
 public class DataFetchService {
@@ -31,21 +30,16 @@ public class DataFetchService {
 
   @Cacheable("mergedData")
   public Mono<MergedData> fetchMergedData() {
-    Mono<User> userMono = wc.get()
-      .uri(userUrl)
-      .retrieve()
-      .bodyToMono(User.class);
+    Mono<User> userMono = wc.get().uri(userUrl).retrieve().bodyToMono(User.class);
 
-    Mono<List<Post>> postsMono = wc.get()
-      .uri(postsUrl)
-      .retrieve()
-      .bodyToFlux(Post.class)
-      .collectList();
+    Mono<List<Post>> postsMono =
+        wc.get().uri(postsUrl).retrieve().bodyToFlux(Post.class).collectList();
 
     return Mono.zip(userMono, postsMono, MergedData::new)
-      .onErrorResume(e -> {
-          log.warn("Error fetching data: {}", e.getMessage());
-          return Mono.empty();
-        });
+        .onErrorResume(
+            e -> {
+              log.warn("Error fetching data: {}", e.getMessage());
+              return Mono.empty();
+            });
   }
 }
