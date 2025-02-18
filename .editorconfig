@@ -4,28 +4,41 @@
 # (e.g. with google-java-format) See:
 # https://github.com/diffplug/spotless
 
-# Top-most EditorConfig file
 root = true
 
-# Generic settings for all files
 [*]
-charset = utf-8
-end_of_line = lf
+indent_style = tab
+indent_size = 4
 insert_final_newline = true
 trim_trailing_whitespace = true
+charset = utf-8
 
-# Settings for Java source files
-[*.java]
-# Google Java Format uses 2-space indents and a 100-character line length
+# md (GitHub shows code fences with 8 spaces)
+[*.md]
 indent_style = space
 indent_size = 2
-max_line_length = 100
-
-# Settings for Gradle build files (if used)
-[*.gradle]
-indent_style = space
-indent_size = 4
-
-# Optional: Markdown files (disable trimming trailing whitespace)
-[*.md]
 trim_trailing_whitespace = false
+
+[*.java]
+# Doc: https://youtrack.jetbrains.com/issue/IDEA-170643#focus=streamItem-27-3708697.0-0
+ij_java_imports_layout = $*,|,java.**,|,javax.**,|,org.**,|,com.**,|,com.diffplug.**,|,*
+ij_java_use_single_class_imports = true
+ij_java_class_count_to_use_import_on_demand = 999
+ij_java_names_count_to_use_import_on_demand = 999
+
+[*.xml.mustache]
+indent_style = space
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Prevent unexpected automatic indentation when crafting test-cases
+[/testlib/src/main/resources/**]
+charset = unset
+end_of_line = unset
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+indent_style = unset
+indent_size = unset
+ij_formatter_enabled = false
