@@ -23,11 +23,17 @@ public class DataFetchService {
   @Value("${api.posts-url}")
   private String postsUrl;
 
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public DataFetchService(WebClient wc) {
     this.wc = wc;
   }
 
   @Cacheable("mergedData")
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public Mono<MergedData> fetchMergedData() {
     var userMono =
       wc.get()
