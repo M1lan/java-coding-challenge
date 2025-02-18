@@ -6,38 +6,28 @@ public class MergedData {
   private User user;
   private List<Post> posts;
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Constructs a new MergedData instance with the given user and posts. */
   public MergedData(User user, List<Post> posts) {
     this.user = user;
     this.posts = posts;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Returns the user part of the merged data. */
   public User getUser() {
     return user;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Sets the user part of the merged data. */
   public void setUser(User user) {
     this.user = user;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Returns the list of posts. */
   public List<Post> getPosts() {
     return posts;
   }
 
-/**
- * TODO: Auto-generated Javadoc
- */
+  /** Sets the list of posts. */
   public void setPosts(List<Post> posts) {
     this.posts = posts;
   }
