@@ -10,13 +10,13 @@ import reactor.core.publisher.Mono;
 public class DataFetchController {
   private final DataFetchService s;
 
-  /** Construct a new DataFetchController with the given DataFetchService. */
+  /** Constructs a new DataFetchController with the given DataFetchService. */
   public DataFetchController(DataFetchService s) {
     this.s = s;
   }
 
   @GetMapping("/")
-  /** Fetch and return the merged data as a "Mono". */
+  /** Fetches and returns the merged data as a Mono. */
   public Mono<MergedData> get() {
     return s.fetchMergedData();
   }

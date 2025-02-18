@@ -1,0 +1,152 @@
+#!/usr/bin/env -S just --justfile
+
+##
+# justfile - Ultimate Java Development Workflow
+# Covers: Development, Testing, Debugging, Performance, Security, Profiling, CI/CD, and Compliance
+# Requires: Just, Maven, Java 17+, Docker (optional), k6 (optional), JMeter (optional), Trivy (optional), Python 3
+
+set shell := ["bash", "-cu"]
+
+
+# --- Core functionality ---
+cli:
+	java -jar target/async-data-fetcher-0.0.1-SNAPSHOT.jar cli
+
+serve:
+	java -jar target/async-data-fetcher-0.0.1-SNAPSHOT.jar
+
+# --- Build & Test ---
+clean:
+    ./mvnw clean
+
+distclean:
+	rm -rf target
+
+compile:
+    ./mvnw compile
+
+build:
+    ./mvnw clean package -DskipTests -Dmaven.test.skip=true
+
+# --- yes, both are needed!! ---
+build-and-test:
+	./mvnw clean package
+
+test-and-build:
+    ./mvnw clean package
+
+test:
+    ./mvnw test
+
+itest:
+    ./mvnw verify -Pintegration
+
+
+# --- helpers---
+
+format-check:
+	./mvnw spotless:check
+
+format-fix:
+	./mvnw spotless:apply
+
+lint:
+	./mvnw checkstyle:check pmd:check spotbugs:check
+
+coverage:
+	./mvnw clean verify jacoco:report
+
+coverage-check:
+    ./mvnw verify jacoco:check
+
+
+docker-build:
+	docker build -t async-data-fetcher .
+
+security-scan:
+	./mvnw org.owasp:dependency-check-maven:check -DnvdApiKey=${NVD_API_KEY}
+
+# --- General Info ---
+java-version:
+    java -version
+
+mvn-version:
+    ./mvnw -version
+
+
+e2e:
+    ./mvnw verify -Pe2e
+
+mutation-test:
+    ./mvnw org.pitest:pitest-maven:mutationCoverage
+
+
+# --- Code Quality & Linting ---
+
+
+javadoc:
+    ./mvnw javadoc:javadoc
+
+report:
+    ./mvnw site
+
+# --- Security & Compliance ---
+deps:
+    ./mvnw dependency:tree
+
+deps-versions:
+    ./mvnw versions:display-dependency-updates
+
+
+security-docker:
+    trivy fs target/
+
+docker-sec-scan:
+    trivy image my-app:latest
+
+container-hardening:
+    dive my-app:latest
+
+# --- Performance & Stress Testing ---
+perf-test-jmeter:
+    jmeter -n -t perf-tests/script.jmx -l perf-tests/results.jtl -e -o perf-tests/report
+
+stress-test:
+    k6 run --vus 500 --duration 2m perf-tests/script.js
+
+load-test:
+    k6 run --vus 100 --duration 10m perf-tests/script.js
+
+soak-test:
+    k6 run --vus 50 --duration 24h perf-tests/script.js
+
+# --- Profiling & Debugging ---
+profile:
+    ./mvnw exec:exec -Dexec.executable="jvisualvm"
+
+heapdump:
+    jcmd $(pgrep -f 'java.*MyApp') GC.heap_dump target/heapdump.hprof
+
+thread-dump:
+    jcmd $(pgrep -f 'java.*MyApp') Thread.print > target/threaddump.txt
+
+gdb-java:
+    gdb --args java -jar target/*.jar
+
+debug:
+    mvnDebug spring-boot:run
+
+# Deployment ---
+
+install:
+    ./mvnw install
+
+deploy:
+	echo not implemented  #./mvnw deploy
+
+# --- CI/CD Pipeline ---
+ci:
+    just clean format-fix lint test coverage security-scan build perf-test-k6 stress-test
+
+all:
+    just ci deploy

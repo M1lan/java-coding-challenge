@@ -22,23 +22,18 @@ public class DataFetchService {
 
   @Value("${api.posts-url}")
   private String postsUrl;
+/**
+ * TODO: Auto-generated Javadoc
+ */
 
-  /**
-   * Constructs a new {@code DataFetchService} with the provided WebClient.
-   *
-   * @param wc the {@link WebClient} used to perform HTTP requests.
-   */
   public DataFetchService(WebClient wc) {
     this.wc = wc;
   }
 
-  /**
-   * Fetches and merges user and post data from external APIs.
-   *
-   * @return a {@link Mono} that emits a {@link MergedData} object containing the merged user and
-   *     posts data, or an empty {@code Mono} if an error occurs during data retrieval
-   */
   @Cacheable("mergedData")
+/**
+ * TODO: Auto-generated Javadoc
+ */
   public Mono<MergedData> fetchMergedData() {
     var userMono =
         wc.get()
