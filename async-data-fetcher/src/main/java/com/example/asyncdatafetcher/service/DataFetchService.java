@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Service
 public class DataFetchService {
 
@@ -29,12 +31,21 @@ public class DataFetchService {
 
   @Cacheable("mergedData")
   public Mono<MergedData> fetchMergedData() {
+    Mono<User> userMono = wc.get()
+      .uri(userUrl)
+      .retrieve()
+      .bodyToMono(User.class);
 
-    return Mono.zip(userMono, postsFlux, MergedData::new)
-      .onErrorResume(
-                     e -> {
-                       log.warn("Error fetching data: {}", e.getMessage());
-                       return Mono.empty();
-                     });
+    Mono<List<Post>> postsMono = wc.get()
+      .uri(postsUrl)
+      .retrieve()
+      .bodyToFlux(Post.class)
+      .collectList();
+
+    return Mono.zip(userMono, postsMono, MergedData::new)
+      .onErrorResume(e -> {
+          log.warn("Error fetching data: {}", e.getMessage());
+          return Mono.empty();
+        });
   }
 }
