@@ -21,8 +21,20 @@ distclean:
 compile:
     ./mvnw compile
 
-build:
+build-only:
     ./mvnw clean package -DskipTests -Dmaven.test.skip=true
+
+build:
+    ./mvnw clean package
+
+build-and-test:
+    ./mvnw clean package
+
+test-only:
+    ./mvnw test
+
+test:
+    ./mvnw test
 
 ########################
 
