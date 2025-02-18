@@ -12,6 +12,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+
+## we also don't want the full perf tests report in git!
+perf-test/report
+
 ### STS ###
 .apt_generated
 .classpath
