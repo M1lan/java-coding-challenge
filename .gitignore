@@ -4,7 +4,9 @@
 async-data-fetcher/HELP.md
 
 ## Note: I'm not using Eclipse or VScode(!)...
-async-data-fetcher/pom.xml.backup
+async-data-fetcher/pom.xml.backup*
+
+## we don't want the build output in git!
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
