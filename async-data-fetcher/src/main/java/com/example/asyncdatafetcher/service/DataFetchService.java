@@ -36,7 +36,7 @@ public class DataFetchService {
    * Fetches and merges user and post data from external APIs.
    *
    * @return a {@link Mono} that emits a {@link MergedData} object containing the merged user and
-   *         posts data, or an empty {@code Mono} if an error occurs during data retrieval
+   *     posts data, or an empty {@code Mono} if an error occurs during data retrieval
    */
   @Cacheable("mergedData")
   public Mono<MergedData> fetchMergedData() {
