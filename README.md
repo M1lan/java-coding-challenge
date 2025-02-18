@@ -1,69 +1,27 @@
-# Async Data Fetcher
+## Problem statement formulation
 
-A minimal Spring Boot microservice that asynchronously fetches data from
-external APIs, merges it, and exposes the result as a REST API or CLI
-output.  Built with Spring Boot WebFlux, it leverages caching,
-asynchronous programming, and Docker for containerization.
+Dear [REDACTED] and dear Reviewers from [REDACTED],
 
-## Features
-- Asynchronous data fetching using Spring WebFlux and Reactor.
-- Merged JSON output from multiple endpoints.
-- Dual operation modes: REST API and CLI.
-- Caching for improved performance.
-- Docker and Docker Compose support.
+as per original Problem statement:
 
-## Prerequisites
-- JDK 17+
-- Maven (or use the provided Maven wrapper)
-- Docker (for containerization)
+> I am creating a "Spring Boot application that demonstrates my expertise in modern Java Spring Boot development; time-boxed in 3 hours".
 
-## Getting Started
 
-### Build
-Using the Justfile:
-```bash
-just build
-```
+## Thingk
+The application integrates data from multiple APIs asynchronously,
+featuring a REST endpoint and CLI interface.  I will implement it using
+Spring Boot, add Project Reactor for reactive programming, and also add
+Spring WebClient for HTTP communications.  Key technical highlights
+include asynchronous data processing, caching, and comprehensive error
+handling.  The project showcases my experience with:
 
-Or manually:
-```bash
-./mvnw clean package
-```
+- Java/Spring Boot ecosystem
+- Reactive programming
+- RESTful API design
+- Caching (built-into Spring Boot)
+- Test-driven development
 
-### Run in Server Mode
-```bash
-just dev
-```
+I'd be happy to discuss this project in more detail during an interview.
+Best of regards,
 
-Access the REST API at [http://localhost:8080/api/merged](http://localhost:8080/api/merged).
-
-### Run in CLI Mode
-
-```bash
-just cli
-```
-
-### Run Tests
-```bash
-just test
-```
-
-### Docker
-Build the Docker image:
-```bash
-just docker-build
-```
-
-Run with Docker Compose:
-```bash
-just docker-up
-```
-## For Developers
-- Use the Maven wrapper for consistency.
-- Follow the established code style ("spotless").
-- Leverage the Justfile for common tasks, use it for dev and pipelines.
-- Run tests frequently using `just test`.
-- Use Docker (and Docker Compose) for containerized environments.
-
-## License
-MIT License
+Milan Santosi
