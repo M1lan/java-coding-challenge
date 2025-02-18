@@ -8,7 +8,7 @@
 #
 # This tool runs in two modes:
 #   1. Normal mode: outputs the combined JSON to stdout and exits.
-#   2. Server mode (--serve): starts an HTTP server (default port 8080)
+#   2. Server mode (--serve): starts an HTTP server (default port 8181)
 #      that serves the combined JSON on every connection.
 #
 # Use --help to learn more.
@@ -29,7 +29,7 @@ IFS=$'\n\t'
 _SELF="$(basename "${0}" || true)"
 _PRINT_HELP=0
 _SERVE=0
-_PORT="${PORT:-8080}"
+_PORT="${PORT:-8181}"
 _RETRY_COUNT="${RETRY_COUNT:-3}"
 _RETRY_DELAY="${RETRY_DELAY:-2}"
 _CURL_TIMEOUT="${CURL_TIMEOUT:-5}"
@@ -67,12 +67,12 @@ Usage: ${_SELF} [options]
 Options:
   -h, --help                   Display this help information.
   -s, --serve                  Run in HTTP server mode.
-  -p, --port PORT              Port to listen on (default: 8080).
+  -p, --port PORT              Port to listen on (default: 8181).
   -v, --verbose                Enable verbose output.
   -c, --config FILE            Configuration file (.conf format).
 
 Environment Variables:
-  PORT                         Port to listen on (default: 8080).
+  PORT                         Port to listen on (default: 8181).
   RETRY_COUNT                  Number of retry attempts for network requests (default: 3).
   RETRY_DELAY                  Delay between retry attempts in seconds (default: 2).
   CURL_TIMEOUT                 Timeout for curl requests in seconds (default: 5).
@@ -81,7 +81,7 @@ Environment Variables:
 
 Examples:
   ${_SELF}                         # Output JSON blob once.
-  ${_SELF} --serve                 # Start HTTP server on port 8080.
+  ${_SELF} --serve                 # Start HTTP server on port 8181.
   ${_SELF} --serve --port 9090     # Start HTTP server on port 9090.
   VERBOSE=1 ${_SELF}               # Run with verbose output.
 EOF
@@ -303,7 +303,7 @@ _handle_connection() {
 # Starts an HTTP server on a specified port using tcpserver.
 # Each incoming connection spawns a new instance of this script with --handle-connection.
 _serve_http() {
-    local port="${1:-8080}"
+    local port="${1:-8282}"
     _log "Starting HTTP server on port ${port} using tcpserver..."
 
     # Trap signals (e.g., Ctrl-C) for graceful shutdown.

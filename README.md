@@ -4,7 +4,9 @@ Dear [REDACTED] and dear Reviewers from [REDACTED],
 
 as per original Problem statement:
 
-> I am creating a "Spring Boot application that demonstrates my expertise in modern Java Spring Boot development; time-boxed in 3 hours".
+> I am creating a "Spring Boot application that demonstrates my
+> expertise in modern Java Spring Boot development; time-boxed in 3
+> hours".
 
 
 ## Thingk
@@ -22,6 +24,7 @@ handling.  The project showcases my experience with:
 - Test-driven development
 
 I'd be happy to discuss this project in more detail during an interview.
+
 Best of regards,
 
 Milan Santosi

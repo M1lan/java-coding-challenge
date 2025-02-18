@@ -3,7 +3,7 @@
 # Test script for fetch-merge-serve.bash
 
 SCRIPT_PATH="./fetch-merge-serve.bash"
-TEST_PORT=9090
+TEST_PORT=8181
 
 _log() {
     printf "%s - %s\n" "$(date +'%Y-%m-%d %H:%M:%S' || true)" "$*"
@@ -35,7 +35,7 @@ _test_fetch_json() {
 
     # Test fetching JSON from nc
     curl -s "http://127.0.0.1:$TEST_PORT" -o "$temp_file"
-    _assert $? "Fetch JSON from server"
+    _assert $? "Fetch JSON from server.. is it running on port 8181?"
 
     # Check if the output is valid JSON
     jq . "$temp_file" >/dev/null 2>&1
