@@ -1,3 +1,13 @@
+## Async Fetch-Merge-Serve Programming Challenge.
+
+- see `./prototype_bash/` for the prototype implementation in Bash.
+- see `./async-data-fetcher` for the spring boot implementation, as requested.
+- see `./rust-wasm-coding-challenge` for the rust implementation  (and WASM deployment!)
+
+Browse to https://test.milan-santosi.workers.dev for the merged JSON!
+Or, do: `curl -sSL https://test.milan-santosi.workers.dev`
+
+
 ## Problem statement formulation
 
 Dear [REDACTED] and dear reviewers from [REDACTED],
