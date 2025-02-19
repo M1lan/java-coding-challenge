@@ -1,4 +1,4 @@
-## Async Fetch-Merge-Serve Programming Challenge.
+# Async Fetch-Merge-Serve Programming Challenge #
 
 - see `./prototype_bash/` for the prototype implementation in Bash.
 - see `./async-data-fetcher` for the spring boot implementation, as requested.
@@ -16,7 +16,7 @@ as per original Problem statement:
 
 > I am creating a "Spring Boot application that demonstrates my
 > expertise in modern Java Spring Boot development; time-boxed in 3
-> hours".
+> hours".  Also, I added a Rust implementation for comparison.
 
 
 ## Plan
