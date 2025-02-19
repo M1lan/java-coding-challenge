@@ -129,13 +129,15 @@ tcpserver (ucspi-tcp).
   not in an editor, get output of history.
   - use my own "production ready bash template" (github.com/m1lan) as
     starting point
-- I'll fill-in the blanks with from output from bash's history, get started.
+- I'll fill-in the blanks with from output from bash's history, get
+  started.
 - I have three hours to do this, so the task itself leaves me a lot of
   room for expression.
   - I'll most likely make the choice, instead of taking the minimalist
     approach to include some boilerplate to make it a bit more fancy
     than it needs to be, but I don't want anyone to think that I typed
-    this all down in the given time, so boilerplate will be clearly marked as such.
+    this all down in the given time, so boilerplate will be clearly
+    marked as such.
   - I will need the three hours of time to also re-familiarize myself
     with Java.
 - I'll probably also want to include some github actions, just because.
@@ -160,19 +162,15 @@ tcpserver (ucspi-tcp).
 
 * prototype implementation
 Note: I am serious about this solution and there is zero amount of
-sarcasm, but probaly the best, most stable, and most production ready
-way to solve this!
-
+sarcasm,- we cover a lot of ground already here.  However, Spring
 - bash
 - curl
 - jq
+- tcpserver
 
-exec 3< <(curl -s http://jsonplaceholder.typicode.com/users/1) ; exec 4< <(curl -s http://jsonplaceholder.typicode.com/posts?userId=1) ; jq -n --argjson user "$(cat <&3)" --argjson posts "$(cat <&4)" '{user: $user, posts: $posts}'
 
 * java implementation
-** spring boot (?)
-- I am not really doing myself a favor to force this tech stack. The
-  task itself is solvable in under 5 minutes.
+** spring boot
 - I am familiar with the concepts of:
   - microservice architecture (and their pitfalls!)
   - concurrency, parallelism and multithreading.
@@ -182,14 +180,13 @@ exec 3< <(curl -s http://jsonplaceholder.typicode.com/users/1) ; exec 4< <(curl 
   - maven / gradle
   - sdkman
   - spring and spring boot
-- I am NOT familiar with writing any substantial Java code, here I will
-  have to quickly learn. Especially Java Testing is a first time.
 - I have learned quite intensely about Java and OOP in 2 universities.
 - For some strange misunderstanding, my "DevOps Engineer" Jobs so far
-  always excluded the "DevOps"-Person me directly working on larger Java
+  always excluded the "DevOps", so me, directly working on larger Java
   codebases. On the job we always had (oftten freelance)
   Backend-Engineers, Coders, and Developers, usually hired on a
   per-project or per-feature basis.
+- It seems to me that Quarkus is the better choice for "serverless".
 
 * learning resources
 
@@ -225,7 +222,7 @@ Some other things... really unimportant (maybe interesting) stuff here.
 "DevOps" is actually NOT a role or title but a way of doing things:
 
 - All Operations is done by Devs. Everybody on the team is a Dev.
-- Everybody is the same, an "Software Engineer".
+- Everybody is the same, a "Software Engineer".
 - Only one silo: the Dev silo. Not a separate DevOps silo.
 - Knowledge-transfer across product-team borders.
 - No "Helpdesk" or "Admin" like role outside of IT-service.

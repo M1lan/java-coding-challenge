@@ -25,7 +25,7 @@ Using the Justfile:
 just build
 ```
 
-Or manually:
+Or with Maven:
 ```bash
 ./mvnw clean package
 ```
@@ -35,7 +35,8 @@ Or manually:
 just dev
 ```
 
-Access the REST API at [http://localhost:8080/api/merged](http://localhost:8080/api/merged).
+Access the REST API at
+[http://localhost:8080/](http://localhost:8080/).
 
 ### Run in CLI Mode
 
