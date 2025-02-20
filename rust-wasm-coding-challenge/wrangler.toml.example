@@ -1,0 +1,11 @@
+name = "cf_worker_wasm_microservice"
+main = "build/worker/shim.mjs"
+compatibility_date = "2025-02-19"
+
+account_id = "your-account-id"
+workers_dev = true
+
+[build]
+#command = "cargo build --lib --release --target wasm32-unknown-unknown"
+command = "cargo install -q worker-build && worker-build --release"
+upload_format = "modules"

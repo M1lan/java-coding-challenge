@@ -100,3 +100,6 @@ flycheck_*.el
 target
 node_modules
 .wrangler
+
+### see wrangler.toml.example
+wrangler.toml
