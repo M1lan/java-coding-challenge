@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2025-02-20 Thu 12:50 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Async Fetch-Merge-Serve - User &amp; Developer Guide</title>
+<meta name="author" content="Milan Santosi &lt;milan.santosi@gmail.com&gt;" />
+<meta name="generator" content="Org Mode" />
+<meta charset="UTF-8">
+<link href="https://unpkg.com/sanitize.css" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+background: linear-gradient(135deg, #1a1a1a, #333);
+color: #f0f0f0;
+font-family: 'Roboto', sans-serif;
+line-height: 1.6;
+}
+header, footer, .content {
+background: rgba(255, 255, 255, 0.05);
+padding: 20px;
+border-radius: 8px;
+margin: 10px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+h1, h2, h3, h4 {
+border-bottom: 1px solid rgba(255,255,255,0.1);
+padding-bottom: 5px;
+}
+a {
+color: #66ff66;
+}
+a:hover {
+color: #ff66cc;
+}
+code {
+background: rgba(0,0,0,0.6);
+padding: 2px 4px;
+border-radius: 4px;
+color: #ffcc00;
+}
+pre {
+background: rgba(0,0,0,0.8);
+padding: 10px;
+border-radius: 4px;
+overflow: auto;
+}
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">Async Fetch-Merge-Serve - User &amp; Developer Guide</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0650fd4">Overview This project implements a serverless microservice named</a></li>
+<li><a href="#orgb9f26ca">User Guide</a>
+<ul>
+<li><a href="#org8ab6987">Deployment</a></li>
+<li><a href="#orga6f00c0">Usage After deployment, access your microservice via the generated</a></li>
+</ul>
+</li>
+<li><a href="#org4806750">Developer Guide</a>
+<ul>
+<li><a href="#orgd734633">Project Structure</a></li>
+<li><a href="#orgf4b58a1">Setup &amp; Local Testing</a></li>
+</ul>
+</li>
+<li><a href="#org42961af">Learning Progress</a></li>
+<li><a href="#org133a489">Resources</a>
+<ul>
+<li><a href="#orgf858dce">Rust</a></li>
+<li><a href="#org631a317">WebAssembly (WASM)</a></li>
+<li><a href="#org00d3a31">Cloudflare Workers</a></li>
+<li><a href="#orga956506">DevOps</a></li>
+</ul>
+</li>
+<li><a href="#org7118d47">DevOps Topics</a></li>
+<li><a href="#orge9d7a34">Future Directions</a></li>
+<li><a href="#org3796874">Conclusion</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org0650fd4" class="outline-2">
+<h2 id="org0650fd4">Overview This project implements a serverless microservice named</h2>
+<div class="outline-text-2" id="text-org0650fd4">
+<p>
+<b><b>cf<sub>worker</sub><sub>wasm</sub><sub>microservice</sub></b></b> that compiles to WebAssembly (WASM) and
+runs on Cloudflare Workers. The service asynchronously fetches:
+</p>
+<ul class="org-ul">
+<li>User data from:
+<a href="http://jsonplaceholder.typicode.com/users/1">http://jsonplaceholder.typicode.com/users/1</a></li>
+<li>Post data from:
+<a href="http://jsonplaceholder.typicode.com/posts?userId=1">http://jsonplaceholder.typicode.com/posts?userId=1</a></li>
+</ul>
+
+<p>
+It then merges these JSON responses into a single payload and returns
+the combined result over HTTP. This project showcases modern Rust
+development, WASM integration, and DevOps practices for efficient
+serverless deployments.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb9f26ca" class="outline-2">
+<h2 id="orgb9f26ca">User Guide</h2>
+<div class="outline-text-2" id="text-orgb9f26ca">
+</div>
+<div id="outline-container-org8ab6987" class="outline-3">
+<h3 id="org8ab6987">Deployment</h3>
+<div class="outline-text-3" id="text-org8ab6987">
+<ul class="org-ul">
+<li><b><b>Prerequisites:</b></b>
+<ul class="org-ul">
+<li>Rust (1.86.0-beta.1), Cargo (1.86.0-beta.1)</li>
+<li>Wrangler (v3.109.2)</li>
+<li>WASM target: `wasm32-unknown-unknown`</li>
+</ul></li>
+<li><p>
+<b><b>Build Commands:</b></b>
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">rustup target add wasm32-unknown-unknown
+cargo build --lib --release --target wasm32-unknown-unknown
+</pre>
+</div></li>
+<li><p>
+<b><b>Deploy Commands:</b></b>
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">wrangler deploy
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga6f00c0" class="outline-3">
+<h3 id="orga6f00c0">Usage After deployment, access your microservice via the generated</h3>
+<div class="outline-text-3" id="text-orga6f00c0">
+<p>
+URL. Sending an HTTP GET request to the URL returns a merged JSON
+response with user and post data.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4806750" class="outline-2">
+<h2 id="org4806750">Developer Guide</h2>
+<div class="outline-text-2" id="text-org4806750">
+</div>
+<div id="outline-container-orgd734633" class="outline-3">
+<h3 id="orgd734633">Project Structure</h3>
+<div class="outline-text-3" id="text-orgd734633">
+<ul class="org-ul">
+<li><b><b>Cargo.toml:</b></b> Dependency and build configurations.</li>
+<li><b><b>src/lib.rs:</b></b> Contains the event handler for HTTP requests, global
+fetch logic via JS interop, and JSON processing.</li>
+<li>Uses external crates: worker, serde, serde<sub>json</sub>, futures,
+wasm-bindgen, wasm-bindgen-futures, serde-wasm-bindgen, and web-sys.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf4b58a1" class="outline-3">
+<h3 id="orgf4b58a1">Setup &amp; Local Testing</h3>
+<div class="outline-text-3" id="text-orgf4b58a1">
+<ul class="org-ul">
+<li>Clone the repository.</li>
+<li>Build locally with the WASM target:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-sh">cargo build --lib --release --target wasm32-unknown-unknown
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+Test functionality via Wrangler's dry-run:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">wrangler deploy --dry-run --outdir=dist
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org42961af" class="outline-2">
+<h2 id="org42961af">Learning Progress</h2>
+<div class="outline-text-2" id="text-org42961af">
+<p>
+In this project folder I am solving the challenge a second time.  This
+is not my first adventure in Rust, or in WASM.  The main motivation here
+was that I feel strongly that Java is a little bit convoluted. And that
+Spring Boot (unlike Quarkus), might not be the best choice for a
+"serverless" environment.  But also: I am not the biggest fan of
+"serverless", and I think that WASM is the much better choice.
+</p>
+
+<p>
+As a Bonus, we also get for-free hosting on Cloudflare, so we can
+actually have this microservice live and deployed somewhere!
+</p>
+
+<p>
+That alone makes it more joyful and more satisfying.  Also, we are
+completely avoiding Docker here because we can directly compile from
+Rust to WASM, and with the cloudflare toolchain also instantly deploy.
+</p>
+
+<p>
+Then the one aspect I enjoyed MOST in comparison to Java: this is just
+two files!  `Cargo.toml` and `./src/lib.rs` so this is much more
+pleasant to work with than the standard java folder and class names
+structure and naming conventions.  And also the error messages from
+rustc are a lot nicer than javac.
+</p>
+
+
+<ul class="org-ul">
+<li><b><b>Rust &amp; Async Programming:</b></b> Leveraging Rust’s asynchronous features
+to concurrently fetch remote data.</li>
+<li><b><b>WebAssembly (WASM):</b></b> Compiling Rust code to WASM to achieve
+low-latency, on-demand execution.</li>
+<li><b><b>Cloudflare Workers:</b></b> Integrating Rust WASM modules into
+Cloudflare’s serverless platform.</li>
+<li><b><b>DevOps TODO :</b></b> Setting up CI/CD pipelines, monitoring deployments,
+and cost optimization strategies in a serverless environment.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org133a489" class="outline-2">
+<h2 id="org133a489">Resources</h2>
+<div class="outline-text-2" id="text-org133a489">
+</div>
+<div id="outline-container-orgf858dce" class="outline-3">
+<h3 id="orgf858dce">Rust</h3>
+<div class="outline-text-3" id="text-orgf858dce">
+<ul class="org-ul">
+<li>[The Rust Programming Language Book](<a href="https://doc.rust-lang.org/book/">https://doc.rust-lang.org/book/</a>)</li>
+<li>[Rust Async Programming](<a href="https://rust-lang.github.io/async-book/">https://rust-lang.github.io/async-book/</a>)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org631a317" class="outline-3">
+<h3 id="org631a317">WebAssembly (WASM)</h3>
+<div class="outline-text-3" id="text-org631a317">
+<ul class="org-ul">
+<li>[Rust and WebAssembly](<a href="https://rustwasm.github.io/">https://rustwasm.github.io/</a>)</li>
+<li>[MDN WebAssembly Documentation](<a href="https://developer.mozilla.org/en-US/docs/WebAssembly">https://developer.mozilla.org/en-US/docs/WebAssembly</a>)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org00d3a31" class="outline-3">
+<h3 id="org00d3a31">Cloudflare Workers</h3>
+<div class="outline-text-3" id="text-org00d3a31">
+<ul class="org-ul">
+<li>[Cloudflare Workers Documentation](<a href="https://developers.cloudflare.com/workers/">https://developers.cloudflare.com/workers/</a>)</li>
+<li>[Workers RS GitHub Repository](<a href="https://github.com/cloudflare/workers-rs">https://github.com/cloudflare/workers-rs</a>)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orga956506" class="outline-3">
+<h3 id="orga956506">DevOps</h3>
+<div class="outline-text-3" id="text-orga956506">
+<ul class="org-ul">
+<li>[Continuous Deployment with Wrangler](<a href="https://developers.cloudflare.com/workers/wrangler/">https://developers.cloudflare.com/workers/wrangler/</a>)</li>
+<li>[Serverless DevOps Best Practices](<a href="https://www.serverless.com/blog/serverless-devops">https://www.serverless.com/blog/serverless-devops</a>)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org7118d47" class="outline-2">
+<h2 id="org7118d47">DevOps Topics</h2>
+<div class="outline-text-2" id="text-org7118d47">
+<ul class="org-ul">
+<li><b><b>CI/CD:</b></b> Automate building and deployment using GitHub Actions or
+GitLab CI.</li>
+<li><b><b>Monitoring:</b></b> Utilize Cloudflare’s analytics and logging tools to
+monitor worker performance.</li>
+<li><b><b>Security:</b></b> Apply best practices for securing serverless functions
+and managing API keys.</li>
+<li><b><b>Cost Optimization:</b></b> Focus on reducing cold start latency and
+resource usage to minimize costs.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge9d7a34" class="outline-2">
+<h2 id="orge9d7a34">Future Directions</h2>
+<div class="outline-text-2" id="text-orge9d7a34">
+<ul class="org-ul">
+<li>Optimize WASM compilation further to reduce cold start times.</li>
+<li>Extend the microservice with additional endpoints or real-time data
+processing.</li>
+<li>Integrate advanced DevOps workflows (e.g., blue-green deployments,
+canary releases).</li>
+<li>Build an interactive front-end for monitoring and managing
+deployments.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3796874" class="outline-2">
+<h2 id="org3796874">Conclusion</h2>
+<div class="outline-text-2" id="text-org3796874">
+<p>
+The <b><b>cf<sub>worker</sub><sub>wasm</sub><sub>microservice</sub></b></b> project exemplifies modern
+serverless development using Rust, WebAssembly, and Cloudflare
+Workers.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2025-02-19</p>
+<p class="author">Author: Milan Santosi &lt;milan.santosi@gmail.com&gt;</p>
+<p class="date">Created: 2025-02-20 Thu 12:50</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
