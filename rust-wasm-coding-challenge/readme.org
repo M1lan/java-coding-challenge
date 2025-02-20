@@ -58,7 +58,7 @@
 #+HTML_HEAD_EXTRA: </style>
 
 * Overview This project implements a serverless microservice named
-**cf\_worker\_wasm\_microservice** that compiles to WebAssembly (WASM) and
+**cf_worker_wasm_microservice** that compiles to WebAssembly (WASM) and
 runs on Cloudflare Workers. The service asynchronously fetches:
 - User data from:
   http://jsonplaceholder.typicode.com/users/1
