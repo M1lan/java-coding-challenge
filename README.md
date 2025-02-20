@@ -4,8 +4,14 @@
 - see `./async-data-fetcher` for the spring boot implementation, as requested.
 - see `./rust-wasm-coding-challenge` for the rust implementation  (and WASM deployment!)
 
+
+Rust / WASM version is hosted on Cloudflare:
+
 Browse to https://test.milan-santosi.workers.dev for the merged JSON!
 Or, do: `curl -sSL https://test.milan-santosi.workers.dev`
+
+For a version with caching, use
+https://cf_worker_wasm_microservice.milan-santosi.workers.dev
 
 
 ## Problem statement formulation
