@@ -2,7 +2,7 @@ name = "cf_worker_wasm_microservice"
 main = "build/worker/shim.mjs"
 compatibility_date = "2025-02-19"
 
-account_id = "cb409d93bf0fa10c31892b26339356ab"
+account_id = "deleted account!"
 workers_dev = true
 
 [build]
