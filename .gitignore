@@ -103,3 +103,7 @@ node_modules
 
 ### see wrangler.toml.example
 wrangler.toml
+/round2/notes/missfont.log
+/round2/notes/notes.html
+/round2/notes/notes.pdf
+/round2/notes/notes.tex
