@@ -1,1 +1,18 @@
-## like this?
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t
+#+options: e:t email:nil expand-links:t f:t inline:t num:t p:nil
+#+options: pri:nil prop:nil stat:t tags:t tasks:t tex:t timestamp:t
+#+options: title:t toc:t todo:t |:t
+#+title: round two
+#+date: <2025-02-22 Sat>
+#+author: milan `insomniaSalt` santosi
+#+email: milan.santosi@gmail.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 31.0.50 (Org mode 9.8-pre)
+#+cite_export:
+
+* 1
+** 1.1
+* 2
