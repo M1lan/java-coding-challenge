@@ -5,13 +5,13 @@
 - see `./rust-wasm-coding-challenge` for the rust implementation  (and WASM deployment!)
 
 
-Rust / WASM version is hosted on Cloudflare:
+Rust / WASM version is hosted on Cloudflare (now offline -- no longer needed!):
 
-Browse to https://test.milan-santosi.workers.dev for the merged JSON!
-Or, do: `curl -sSL https://test.milan-santosi.workers.dev`
+Browse to https://test.[REDACTED].workers.dev for the merged JSON!
+Or, do: `curl -sSL https://test.[REDACTED].workers.dev`
 
 For a version with caching, use
-https://cf_worker_wasm_microservice.milan-santosi.workers.dev
+https://cf_worker_wasm_microservice.[REDACTED].workers.dev
 
 
 ## Problem statement formulation
@@ -24,6 +24,20 @@ as per original Problem statement:
 > expertise in modern Java Spring Boot development; time-boxed in 3
 > hours".  Also, I added a Rust implementation for comparison.
 
+Also:
+
+> I'm a "DevOps Engineer" -- this means to me I am a Ops who can Dev and
+> I am also a Dev who knows Ops.  This translates to "Fullstack", not
+> Webdev-fullstack, that's included in the "Dev" half!  Learning a new
+> Programming Language is a matter of 3 weeks, including libraries.  The
+> Java spring-boot example shows use of best-practice for-the-purpose
+> libraries.  The "round2" is an attempt to do everything from scratch
+> without the help of libraries.  Java itself, as in the language, is
+> not a deciding factor for me.  We can use Go, Python, JS/TS, Rust,
+> Java, ... .  It does not really matter and I have experience with all
+> these languages and their Ecosystems.  The point of this challenge is
+> to show that I can program,- this excercise is not about demonstrating
+> Cloud-Infrastructure and "DevOps" prowess yet.
 
 ## Plan
 The application integrates data from multiple APIs asynchronously,
