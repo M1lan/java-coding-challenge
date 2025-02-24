@@ -1,0 +1,60 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t
+#+options: e:t email:nil expand-links:t f:t inline:t num:t p:nil
+#+options: pri:nil prop:nil stat:t tags:t tasks:t tex:t timestamp:t
+#+options: title:t toc:t todo:t |:t
+#+title: a friendly suggestion for an interview process
+#+date: <2025-02-22 Sat>
+#+author: milan `insomniaSalt` santosi
+#+email: milan.santosi@gmail.com
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 31.0.50 (Org mode 9.8-pre)
+#+cite_export:
+
+* what's going on?
+
+A very friendly suggestion for an respectful interview process:
+#+BEGIN_QUOTE
+:start
+1. Headhunt someone or receive a recommendation from a friend!
+2. Say hello, ask for CV, send JD, arrange 15-min call. Introduce and
+   Quick Tech-roast. If they think Javascript is Java or don't now `ls
+   -la` GOTO :end
+:continue
+3. Send 1-2 simple leetcode style questions, or similar tell them to
+   send answer by email reply next day at 10am. Can't even do
+   fizzbuzz(100) in O(1) or don't even know YAML... or maybe: cannot
+   even explain every single word in `public static void main(String[]
+   args)`? GOTO :end else :continue
+:continue
+4. Now, meet them. Schedule 30 min call; full-intro and CV. Allow them
+   to meet 1-2 people they'll be having dailies with, and maybe also
+   their direct lead.  Tell them what you are looking for in the role
+   and what your expectations are.  Ask why they think they are a good
+   fit for this role and what they bring to the table.  Then give them
+   the real coding challenge and make sure to formulate clear
+   requirements to manage expectations.  Think: "what if this was a
+   one-day ticket in an agile sprint in our company?".  Show how much
+   they need to get done in 1 day, but don't micro-manage their
+   implementation.  Scope it clearly.  Let them know what it's about:
+   "best practices", or "be fast", "be complete", or "don't use any
+   imports, write it all by yourself", ... such things help a lot for
+   scope.  Don't mislead them by writing "if there is a more obvious
+   solution" (there always is), but instead formulate clear acceptance
+   criteria and also time-frame is realistic.  Freedom is good for
+   creativity, but too much guesswork is usually bad.  Don't let them
+   choose a lang you don't use. GOTO :continue
+:continue
+5. Receive solution by end of week, check acceptance criteria is
+   fulfilled, use a bunch of AI-detector tools (not just one) on both
+   code and git commit-history, and decide. GOTO :continue or :end
+:continue
+6. Let them Meet the team (call or onsite).  If possible, also let them
+   see the office.  If anything fishy GOTO :abort else :make_offer
+:end
+:abort
+:make_offer
+
+#+END_QUOTE
