@@ -3,7 +3,7 @@
 #+options: e:t email:nil expand-links:t f:t inline:t num:t p:nil
 #+options: pri:nil prop:nil stat:t tags:t tasks:t tex:t timestamp:t
 #+options: title:t toc:t todo:t |:t
-#+title: round two
+#+title: round two devlog
 #+date: <2025-02-22 Sat>
 #+author: milan `insomniaSalt` santosi
 #+email: milan.santosi@gmail.com
@@ -13,6 +13,122 @@
 #+creator: Emacs 31.0.50 (Org mode 9.8-pre)
 #+cite_export:
 
-* 1
-** 1.1
-* 2
+
+* project summary: async data fetcher microservice
+this project is a spring boot microservice that merges user and post
+data from external apis, built with a strong emphasis on oops best
+practices.
+
+** project structure
+- src/main/java
+  - com.example.asyncdatafetcher
+    - AsyncDataFetcherApplication.java: *the main entrypoint that
+      bootstraps the spring boot application.*
+    - cli/CliRunner.java: *a command-line runner that allows execution
+      via the cli.*
+    - controller/
+      - DataFetchController.java: *exposes an endpoint ("/") returning
+        merged api data.*
+      - TestExceptionController.java: *provides a test endpoint
+        ("/error") to simulate exceptions.*
+    - exception/
+      - GlobalExceptionHandler.java: *centralizes error handling using
+        spring's @restcontrolleradvice.*
+    - model/
+      - User.java: *plain old java object representing user data.*
+      - Post.java: *a pojo representing post data.*
+      - MergedData.java: *combines user and post data into a single
+        object.*
+    - service/
+      - ApiClient.java: *encapsulate http calls w/ java's built-in
+        httpclient.*
+      - DataFetchService.java: *fetches and merges data from external
+        api for json mapping.*
+
+- src/test/java
+  - contains unit tests for the api client, data fetch service, and controllers.
+
+- resources/
+  - application.properties
+
+- build.gradle
+
+- Justfile
+
+
+** code and tests
+$ tree -a src/main
+src/main
+├── java
+│   └── com
+│       └── example
+│           └── asyncdatafetcher
+│               ├── AsyncDataFetcherApplication.java
+│               ├── cli
+│               │   └── CliRunner.java
+│               ├── controller
+│               │   └── DataFetchController.java
+│               ├── exception
+│               │   └── GlobalExceptionHandler.java
+│               ├── model
+│               │   ├── MergedData.java
+│               │   ├── Post.java
+│               │   └── User.java
+│               └── service
+│                   ├── ApiClient.java
+│                   ├── DataFetchService.backup.java
+│                   └── DataFetchService.java
+└── resources
+    └── application.properties
+
+11 directories, 11 files
+
+
+$ tree -a src/test/
+src/test/
+└── java
+    └── com
+        └── example
+            ├── asyncdatafetcher
+            │   ├── controller
+            │   │   └── DataFetchControllerTest.java
+            │   ├── exception
+            │   │   └── GlobalExceptionHandlerTest.java
+            │   └── service
+            │       ├── ApiClientTest.java
+            │       └── DataFetchServiceTest.java
+            └── AsyncDataFetcherApplicationTests.java
+
+8 directories, 5 files
+
+
+** oop thinking
+- separation of concerns: each class focuses on a single responsibility
+  (eg. api client handles http, service handles merging).
+- modularity: the project is organized into distinct packages
+  (controllers, services, models, etc.) to isolate functionality.
+- encapsulation: domain models encapsulate their state using
+  getters/setters, protecting internal data.
+- dependency injection: spring boot’s di is used to inject dependencies,
+  enhancing testability and reducing tight coupling.
+- testability: clear separation and dependency injection make the code
+  easily mockable and testable.
+- error handling: a global exception handler ensures uniform error
+  responses.
+- clean code: the code emphasizes simplicity, clarity, and
+  maintainability.
+
+** learning referenzes
+- Effective Java by Joshua Bloch
+  a must-read for java best practices and effective programming techniques.
+- clean code by robert c. martin
+  provides principles for writing clear and maintainable code.
+- design patterns: elements of reusable object-oriented software by gamma et al.
+  classic resource on oops design patterns.
+- java concurrency in practice by brian goetz
+  essential for understanding thread safety and concurrency in java.
+- refactoring* by martin fowler
+  techniques for improving code structure and maintainability.
+- official documentation:
+  - oracle java docs: https://docs.oracle.com/javase/
+  - spring boot docs: https://spring.io/projects/spring-boot
