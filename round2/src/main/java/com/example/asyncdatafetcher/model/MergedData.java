@@ -13,9 +13,19 @@ public class MergedData {
         this.posts = posts;
     }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public User getUser() {
+        return user;
+    }
 
-    public List<Post> getPosts() { return posts; }
-    public void setPosts(List<Post> posts) { this.posts = posts; }
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 }
