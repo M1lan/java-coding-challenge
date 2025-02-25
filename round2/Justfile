@@ -1,25 +1,27 @@
 #!/usr/bin/env -S just --justfile
 
-dev:
-  ./gradlew bootRun
+default: cli
+
+cli:
+	./gradlew bootRun --args="cli"
+
+serve:
+	./gradlew bootRun
 
 build:
-  ./gradlew build
+	./gradlew build
 
 test:
-  ./gradlew test
+	./gradlew test
 
 build-all:
-  ./gradlew clean build
+	./gradlew clean build
 
 build-only:
-  ./gradlew assemble
+	./gradlew assemble
 
 test-only:
-  ./gradlew test
+	./gradlew test
 
 clean:
-  ./gradlew clean
-
-run:
-  ./gradlew bootRun
+	./gradlew clean

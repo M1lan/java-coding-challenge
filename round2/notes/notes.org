@@ -13,6 +13,33 @@
 #+creator: Emacs 31.0.50 (Org mode 9.8-pre)
 #+cite_export:
 
+* round 2
+- removed external reactive, caching, and resilience libraries to
+  demonstrate raw java oops skills using built‑in features
+- switched from webflux/reactive programming to synchronous http calls
+  with java.net.http for simplicity and clarity
+- encapsulated http logic in an ApiClient class following the single
+  responsibility principle
+- improved separation of concerns by clearly splitting models, services,
+  controllers, configuration, and cli components
+- added a dedicated AppConfig for bean definitions (ObjectMapper,
+  ApiClient) to centralize configuration and enhance testability
+- configured ObjectMapper to ignore unknown json properties, increasing
+  robustness against external api changes
+- provided comprehensive unit and integration tests (including tests for
+  the controller, service, and api client)
+- introduced a cli runner (CliRunner) to demonstrate alternative
+  application execution paths
+- implemented a global exception handler to standardize error responses
+  across the application
+- included a detailed README with build, run, and test instructions for
+  better documentation and maintainability
+- used gradle and a justfile for consistent, modern build automation and
+  task management
+- overall, the refactored code shows practices such as encapsulation,
+  modularity, and dependency injection, making it a strong example of
+  java microservices architecture
+
 
 * project summary: async data fetcher microservice
 this project is a spring boot microservice that merges user and post

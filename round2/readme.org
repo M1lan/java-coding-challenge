@@ -1,0 +1,84 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK") date:t
+#+options: e:t email:nil expand-links:t f:t inline:t num:nil p:nil
+#+options: pri:nil prop:nil stat:t tags:t tasks:t tex:t timestamp:t
+#+options: title:t toc:t todo:t |:t
+
+#+TITLE: async-data-fetcher round2 README
+#+AUTHOR: Milan Santosi
+#+DATE: 2025-02-25
+
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 31.0.50 (Org mode 9.8-pre)
+
+
+* overview
+This project is a spring boot microservice that merges user and post
+data from external APIs, without using additional libraries.
+
+* project structure
+- **src/main/java/com/example/asyncdatafetcher/**
+  - **AsyncDataFetcherApplication.java:** main entry point that
+    bootstraps the application.
+  - **cli/CliRunner.java:** command-line runner that executes
+    cli-specific logic when "cli" argument is provided.
+  - **controller/DataFetchController.java:** rest controller exposing
+    the merged data endpoint.
+  - **exception/GlobalExceptionHandler.java:** centralizes exception
+    handling for consistent error responses.
+  - **config/AppConfig.java:** defines bean configurations
+    (objectmapper, apiclient) to support dependency injection.
+  - **service/ApiClient.java:** encapsulates http call logic using
+    java.net.http.
+  - **service/DataFetchService.java:** fetches and merges user and post
+    data from external apis.
+  - **model/User.java, Post.java, MergedData.java:** domain models
+    representing api data.
+- **src/main/resources/application.properties:** holds configuration for
+  api endpoints and application settings.
+- **tests:** comprehensive tests covering context loading, controllers,
+  services, and the api client.
+- **justfile:** convenience for building and testing.
+
+* build and run instructions
+- **build the project:**
+  - using gradle: run `./gradlew build`
+  - or use the justfile: run `just build`
+- **run the application:**
+  - using gradle: run `./gradlew bootRun`
+  - to run in cli mode, use: `./gradlew bootRun --args="cli"`
+- **run tests:**
+  - using gradle: run `./gradlew test`
+  - or use the justfile: run `just test`
+
+* configuration
+API endpoints and app settings are defined in
+`src/main/resources/application.properties`.  Settings include:
+- `api.user-url`: the endpoint for fetching user data.
+- `api.posts-url`: the endpoint for fetching posts.
+- `spring.application.name`: the application name.
+
+* testing
+unit and integration tests:
+- **ApplicationTests:** verifies that the spring context loads
+  correctly.
+- **DataFetchControllerTest:** tests the rest endpoint provided by the
+  data fetch controller.
+- **DataFetchServiceTest:** ensures the data fetch service correctly
+  merges data.
+- **ApiClientTest:** verifies the functionality of the http client
+  wrapper.
+
+
+* additional notes
+This project uses a modular design with clear separation of concerns and
+dependency injection for better maintainability.  References:
+- *Java Concepts* by Cay Horstmann
+- *Effective Java* by Joshua Bloch
+- *Clean Code* by Robert C. Martin
+- *Design Patterns: elements of reusable object-oriented software* by
+  Erich Gamma
+- official spring boot documentation:
+  https://spring.io/projects/spring-boot
