@@ -1,1 +1,4 @@
 rootProject.name = 'async-data-fetcher2'
+api.user-url=http://jsonplaceholder.typicode.com/users/1
+api.posts-url=http://jsonplaceholder.typicode.com/posts?userId=1
+spring.application.name=async-data-fetcher
