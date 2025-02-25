@@ -1,0 +1,25 @@
+#!/usr/bin/env -S just --justfile
+
+dev:
+  ./gradlew bootRun
+
+build:
+  ./gradlew build
+
+test:
+  ./gradlew test
+
+build-all:
+  ./gradlew clean build
+
+build-only:
+  ./gradlew assemble
+
+test-only:
+  ./gradlew test
+
+clean:
+  ./gradlew clean
+
+run:
+  ./gradlew bootRun
