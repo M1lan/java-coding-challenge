@@ -19,37 +19,37 @@ This project is a spring boot microservice that merges user and post
 data from external APIs, without using additional libraries.
 
 * project structure
-- **src/main/java/com/example/asyncdatafetcher/**
-  - **AsyncDataFetcherApplication.java:** main entry point that
+- src/main/java/com/example/asyncdatafetcher/
+  - AsyncDataFetcherApplication.java: main entry point that
     bootstraps the application.
-  - **cli/CliRunner.java:** command-line runner that executes
+  - cli/CliRunner.java: command-line runner that executes
     cli-specific logic when "cli" argument is provided.
-  - **controller/DataFetchController.java:** rest controller exposing
+  - controller/DataFetchController.java: rest controller exposing
     the merged data endpoint.
-  - **exception/GlobalExceptionHandler.java:** centralizes exception
+  - exception/GlobalExceptionHandler.java: centralizes exception
     handling for consistent error responses.
-  - **config/AppConfig.java:** defines bean configurations
+  - config/AppConfig.java: defines bean configurations
     (objectmapper, apiclient) to support dependency injection.
-  - **service/ApiClient.java:** encapsulates http call logic using
+  - service/ApiClient.java: encapsulates http call logic using
     java.net.http.
-  - **service/DataFetchService.java:** fetches and merges user and post
+  - service/DataFetchService.java: fetches and merges user and post
     data from external apis.
-  - **model/User.java, Post.java, MergedData.java:** domain models
+  - model/User.java, Post.java, MergedData.java: domain models
     representing api data.
-- **src/main/resources/application.properties:** holds configuration for
+- src/main/resources/application.properties: holds configuration for
   api endpoints and application settings.
-- **tests:** comprehensive tests covering context loading, controllers,
+- tests: comprehensive tests covering context loading, controllers,
   services, and the api client.
-- **justfile:** convenience for building and testing.
+- justfile: convenience for building and testing.
 
 * build and run instructions
-- **build the project:**
+- build the project:
   - using gradle: run `./gradlew build`
   - or use the justfile: run `just build`
-- **run the application:**
+- run the application:
   - using gradle: run `./gradlew bootRun`
   - to run in cli mode, use: `./gradlew bootRun --args="cli"`
-- **run tests:**
+- run tests:
   - using gradle: run `./gradlew test`
   - or use the justfile: run `just test`
 
@@ -62,13 +62,13 @@ API endpoints and app settings are defined in
 
 * testing
 unit and integration tests:
-- **ApplicationTests:** verifies that the spring context loads
+- ApplicationTests: verifies that the spring context loads
   correctly.
-- **DataFetchControllerTest:** tests the rest endpoint provided by the
+- DataFetchControllerTest: tests the rest endpoint provided by the
   data fetch controller.
-- **DataFetchServiceTest:** ensures the data fetch service correctly
+- DataFetchServiceTest: ensures the data fetch service correctly
   merges data.
-- **ApiClientTest:** verifies the functionality of the http client
+- ApiClientTest: verifies the functionality of the http client
   wrapper.
 
 
